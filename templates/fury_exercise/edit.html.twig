@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit FuryExercise{% endblock %}
+
+{% block body %}
+    <h1>Edit FuryExercise</h1>
+
+    {{ include('fury_exercise/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('fury_exercise_index') }}">back to list</a>
+
+    {{ include('fury_exercise/_delete_form.html.twig') }}
+{% endblock %}

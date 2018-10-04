@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+
+{#{% block body %}#}
+    {#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
+        {#{% include 'navigation.html.twig' %}#}
+    {#{% else %}#}
+        {#<nav class="navbar navbar-expand navbar-dark bg-dark">#}
+            {#<ul class="navbar-nav row justify-content-between w-100 mx-auto">#}
+                {#<li class="col-4">#}
+                    {#<a class="nav-item btn btn-primary w-100" href="{{ path('gymfury_homepage') }}">Home</a>#}
+                {#</li>#}
+                {#<li class="col-4">#}
+                    {#<a class="nav-item navbar-brand w-100" href="#">GymFury</a>#}
+                {#</li>#}
+                {#<li class="col-4">#}
+                    {#<a class="nav-item btn btn-success w-100" href="{{ path('gymfury_login') }}">Login</a>#}
+                {#</li>#}
+            {#</ul>#}
+        {#</nav>#}
+    {#{% endif %}#}
+{#{{ form_start(form) }}#}
+    {#{{ form_row(form.username) }}#}
+    {#{{ form_row(form.email) }}#}
+    {#{{ form_row(form.plainPassword.first) }}#}
+    {#{{ form_row(form.plainPassword.second) }}#}
+
+    {#<button type="submit" class="btn btn-success">Register</button>#}
+{#{{ form_end(form) }}#}
+{#{% endblock %}#}
+
+{% block body %}
+    {% if is_granted('ROLE_USER') %}
+        {% include 'navigation.html.twig' %}
+    {% else %}
+        <nav class="navbar navbar-expand navbar-dark bg-dark">
+            <ul class="navbar-nav row justify-content-between w-100 mx-auto">
+                <li class="col-4">
+                    <a class="nav-item btn btn-primary w-100" href="{{ path('gymfury_homepage') }}">Home</a>
+                </li>
+                <li class="col-4 text-center">
+                    <a class="nav-item navbar-brand w-100" href="#">GymFury</a>
+                </li>
+                <li class="col-4">
+                    <a class="nav-item btn btn-success w-100" href="{{ path('gymfury_registration') }}">Register</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+    {{ form_start(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password.first) }}
+        {{ form_row(form.password.second) }}
+        {{ form_row(form.firstname) }}
+        {{ form_row(form.lastName) }}
+
+        <button type="submit" class="btn btn-success">Register</button>
+    {{ form_end(form) }}
+
+    <hr>
+{% endblock %}
+
+

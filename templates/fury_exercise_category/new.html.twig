@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New FuryExerciseCategory{% endblock %}
+
+{% block body %}
+    <h1>Create new FuryExerciseCategory</h1>
+
+    {{ include('fury_exercise_category/_form.html.twig') }}
+
+    <a href="{{ path('fury_exercise_category_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - New Exercise{% endblock %}
+
+{% block body %}
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        {#<a class="navbar-brand" href="#">Navbar</a>#}
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-primary" href="{{ path('fury_exercise_new') }}" role="button">New</a>
+        {% endif %}
+        <a class="navbar-brand" href="{{ path('gymfury_homepage') }}">GymFury</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('gymfury_homepage') }}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('gymfury_account') }}">Account</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownFuryExercise" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Exercises
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownFuryExercise">
+                        <a class="dropdown-item" href="{{ path('fury_exercise_index') }}">All Exercises</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="dropdown-item" href="{{ path('fury_exercise_new') }}">Create Exercise</a>
+                        {% endif %}
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('gymfury_logout') }}">Logout</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <h1 class="text-center topElement">Create Exercise</h1>
+    <form method="post" action="{{ path('fury_exercise_new') }}">
+        <label for="name">Name</label>
+        <input type="text" {% if errors.name %}
+                class="form-control errorClass" placeholder="{{ errors.name }}"
+            {% else %}
+               class="form-control"
+            {% endif %}
+               id="name" name="name" value="{{ exercise.name }}">
+        <br>
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" {% if errors.description %} class="form-control errorClass" placeholder="Area can't be blank" {% else %} class="form-control" {% endif %}rows="4">{% if not errors.description %}{{ exercise.description }}{% endif %}</textarea>
+
+        <label for="category">Category</label>
+        <br>
+        <select
+                {% if errors.category %}
+                    class="form-control errorClass"
+                {% else %}
+                    class="form-control"
+                {% endif %}
+                id="category" name="category">
+
+            <option value="" disabled selected>
+                {% if errors.category %}
+                    {{ errors.category }}
+                {% else %}
+                    Select Category
+                {% endif %}
+            </option>
+            {% for category in categories %}
+                <option
+                        {% if category.name == exercise.firstCategoryName %}
+                            selected
+                        {% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+        <h2>{{ exercise.firstCategoryName }}</h2>
+        <br>
+            <button class="btn btn-primary w-100" type="submit">submit</button>
+    </form>
+    <br>
+
+    <p>
+        <a class="btn btn-success w-100" role="button" href="{{ path('fury_exercise_index') }}">back to list</a>
+    </p>
+{% endblock %}

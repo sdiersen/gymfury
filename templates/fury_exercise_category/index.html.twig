@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin-Exericse Categories{% endblock %}
+
+{% block body %}
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        {#<a class="navbar-brand" href="#">Navbar</a>#}
+        <a class="btn btn-primary" href="{{ path('fury_exercise_category_new') }}" role="button">New</a>
+        <a class="navbar-brand" href="{{ path('gymfury_homepage') }}">GymFury</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('gymfury_homepage') }}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('gymfury_account') }}">Account</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownFuryExercise" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Exercises
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownFuryExercise">
+                        <a class="dropdown-item" href="{{ path('fury_exercise_index') }}">All Exercises</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a class="dropdown-item" href="{{ path('fury_exercise_category_new') }}">Create Exercise</a>
+                        {% endif %}
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('gymfury_logout') }}">Logout</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <h1 class="text-center">Exerice Categories</h1>
+    {% for fury_exercise_category in fury_exercise_categories %}
+        <div class="container">
+            <h2 class="text-capitalize text-center">{{ fury_exercise_category.name }}</h2>
+            <p>{{ fury_exercise_category.description }}</p>
+            <div class="row">
+                <div class="col-6">
+                    <a class="btn btn-success w-100 mx-auto" role="button" href="{{ path('fury_exercise_category_edit', {'id': fury_exercise_category.id}) }}">Edit</a>
+                </div>
+                <div class="col-6">
+                    <a class="btn btn-danger w-100 mx-auto" role="button" href="{{ path('fury_exercise_category_delete', {'id': fury_exercise_category.id}) }}">Delete</a>
+                </div>
+            </div>
+            <hr>
+        </div>
+    {% else %}
+        <h2>no records found</h2>
+    {% endfor %}
+
+
+    <a class="btn btn-primary w-100" role="button" href="{{ path('fury_exercise_category_new') }}">Create new</a>
+{% endblock %}

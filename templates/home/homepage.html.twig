@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}Homepage{% endblock %}
+{% block body %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {% include 'navigation.html.twig' %}
+    {% else %}
+        <nav class="navbar navbar-expand navbar-dark bg-dark">
+            <ul class="navbar-nav row justify-content-between w-100 mx-auto">
+                <li class="col-4">
+                    <a class="nav-item btn btn-primary w-100" href="{{ path('gymfury_login') }}">Login</a>
+                </li>
+                <li class="col-4 text-center">
+                    <a class="nav-item navbar-brand w-100 " href="#">GymFury</a>
+                </li>
+                <li class="col-4">
+                    <a class="nav-item btn btn-success w-100" href="{{ path('gymfury_registration') }}">Register</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="homepageLogin"></div>
+    {% endif %}
+
+{% endblock %}
